@@ -24,11 +24,11 @@
             overflow-x: hidden;
         }
         .container {
-            max-width: 700px;
+            max-width: 400px;
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -40,9 +40,9 @@
         }
         h1 {
             text-align: center;
-            font-size: 2.8em;
+            font-size: 1.8em;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             background: linear-gradient(45deg, #00d4ff, #007bff, #ff007f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -50,20 +50,20 @@
         }
         .selection {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
         select {
             flex: 1;
-            min-width: 150px;
-            padding: 15px;
+            min-width: 120px;
+            padding: 12px;
             border: none;
-            border-radius: 12px;
-            background: #000;  /* Fondo negro */
-            color: #fff;  /* Letras blancas */
-            font-size: 16px;
+            border-radius: 10px;
+            background: #000;
+            color: #fff;
+            font-size: 14px;
             cursor: pointer;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
@@ -74,20 +74,20 @@
             transform: scale(1.02);
         }
         option {
-            background: #000;  /* Fondo negro para opciones */
-            color: #fff;  /* Letras blancas para opciones */
+            background: #000;
+            color: #fff;
         }
         .power-btn {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: linear-gradient(45deg, #ff4757, #ff3838, #ff6b6b);
             border: none;
             color: #fff;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin: 30px auto;
+            margin: 20px auto;
             display: block;
             box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6);
             transition: all 0.3s ease;
@@ -112,64 +112,76 @@
             box-shadow: 0 12px 35px rgba(255, 71, 87, 0.8);
         }
         .tv-controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 15px;
-            margin-top: 20px;
+        }
+        .nav-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .num-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 150px;
+        }
+        .bottom-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 200px;
         }
         .ac-controls {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px;
+            gap: 15px;
         }
         .ac-display {
             border: 3px solid #00d4ff;
-            width: 180px;
-            height: 180px;
-            border-radius: 15px;
+            width: 150px;
+            height: 120px;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-bottom: 25px;
             background: linear-gradient(145deg, rgba(0, 212, 255, 0.1), rgba(0, 123, 255, 0.1));
             box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
-            position: relative;
-        }
-        .ac-display::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00d4ff, #007bff, #ff007f);
-            border-radius: 15px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .ac-display:hover::after {
-            opacity: 0.5;
         }
         #temp {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
             color: #00d4ff;
         }
         #mode {
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: #ff007f;
             margin-top: 5px;
         }
+        .ac-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            max-width: 200px;
+        }
         button {
-            padding: 15px;
+            padding: 12px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: linear-gradient(145deg, #007bff, #0056b3);
             color: #fff;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -177,7 +189,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 5px;
         }
         button:hover {
             transform: translateY(-2px);
@@ -187,16 +199,16 @@
             transform: translateY(0);
         }
         .nav-btn {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            font-size: 18px;
+            font-size: 16px;
         }
         .num-btn {
-            width: 70px;
-            height: 70px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
         }
         .hidden {
@@ -204,29 +216,32 @@
         }
         .footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 12px;
+            margin-top: 20px;
+            font-size: 10px;
             color: #888;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
             .container {
-                padding: 20px;
+                padding: 15px;
             }
             h1 {
-                font-size: 2.2em;
-            }
-            .tv-controls {
-                grid-template-columns: repeat(3, 1fr);
+                font-size: 1.5em;
             }
             .selection {
                 flex-direction: column;
+            }
+            .tv-controls {
+                gap: 10px;
+            }
+            .num-grid {
+                max-width: 120px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-remote"></i> Control Universal Web</h1>
+        <h1><i class="fas fa-remote"></i> Control Universal</h1>
         
         <div class="selection">
             <select id="marca">
@@ -251,28 +266,43 @@
         
         <!-- Controles TV -->
         <div id="tv-controls" class="tv-controls hidden">
-            <button onclick="sendIR('Vol+')"><i class="fas fa-volume-up"></i></button>
-            <button onclick="sendIR('Vol-')"><i class="fas fa-volume-down"></i></button>
-            <button onclick="sendIR('Ch+')">CH+</button>
-            <button onclick="sendIR('Ch-')">CH-</button>
-            <button onclick="sendIR('Up')" class="nav-btn"><i class="fas fa-chevron-up"></i></button>
-            <button onclick="sendIR('Down')" class="nav-btn"><i class="fas fa-chevron-down"></i></button>
-            <button onclick="sendIR('Left')" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
-            <button onclick="sendIR('Rightx')" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
-            <button onclick="sendIR('OK')">OK</button>
-            <button onclick="sendIR('Home')"><i class="fas fa-home"></i></button>
-            <button onclick="sendIR('Back')"><i class="fas fa-arrow-left"></i></button>
-            <button onclick="sendIR('Options')"><i class="fas fa-cog"></i></button>
-            <button onclick="sendIR('0')" class="num-btn">0</button>
-            <button onclick="sendIR('1')" class="num-btn">1</button>
-            <button onclick="sendIR('2')" class="num-btn">2</button>
-            <button onclick="sendIR('3')" class="num-btn">3</button>
-            <button onclick="sendIR('4')" class="num-btn">4</button>
-            <button onclick="sendIR('5')" class="num-btn">5</button>
-            <button onclick="sendIR('6')" class="num-btn">6</button>
-            <button onclick="sendIR('7')" class="num-btn">7</button>
-            <button onclick="sendIR('8')" class="num-btn">8</button>
-            <button onclick="sendIR('9')" class="num-btn">9</button>
+            <div class="nav-row">
+                <button onclick="sendIR('Vol-')" class="nav-btn"><i class="fas fa-volume-down"></i></button>
+                <div class="nav-center">
+                    <button onclick="sendIR('Up')" class="nav-btn"><i class="fas fa-chevron-up"></i></button>
+                    <div style="display: flex; gap: 5px;">
+                        <button onclick="sendIR('Left')" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button onclick="sendIR('OK')">OK</button>
+                        <button onclick="sendIR('Rightx')" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <button onclick="sendIR('Down')" class="nav-btn"><i class="fas fa-chevron-down"></i></button>
+                </div>
+                <button onclick="sendIR('Vol+')" class="nav-btn"><i class="fas fa-volume-up"></i></button>
+            </div>
+            
+            <div class="num-grid">
+                <button onclick="sendIR('1')" class="num-btn">1</button>
+                <button onclick="sendIR('2')" class="num-btn">2</button>
+                <button onclick="sendIR('3')" class="num-btn">3</button>
+                <button onclick="sendIR('4')" class="num-btn">4</button>
+                <button onclick="sendIR('5')" class="num-btn">5</button>
+                <button onclick="sendIR('6')" class="num-btn">6</button>
+                <button onclick="sendIR('7')" class="num-btn">7</button>
+                <button onclick="sendIR('8')" class="num-btn">8</button>
+                <button onclick="sendIR('9')" class="num-btn">9</button>
+            </div>
+            
+            <div class="bottom-row">
+                <button onclick="sendIR('0')" class="num-btn">0</button>
+                <button onclick="sendIR('Ch-')">CH-</button>
+                <button onclick="sendIR('Ch+')">CH+</button>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button onclick="sendIR('Home')"><i class="fas fa-home"></i></button>
+                <button onclick="sendIR('Back')"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="sendIR('Options')"><i class="fas fa-cog"></i></button>
+            </div>
         </div>
         
         <!-- Controles AC -->
@@ -281,13 +311,16 @@
                 <div id="temp">24°C</div>
                 <div id="mode">Cool</div>
             </div>
-            <button onclick="sendIR('Up')"><i class="fas fa-plus"></i> Temp</button>
-            <button onclick="sendIR('Down')"><i class="fas fa-minus"></i> Temp</button>
-            <button onclick="sendIR('Left')"><i class="fas fa-arrow-left"></i> Mode</button>
-            <button onclick="sendIR('Rightx')"><i class="fas fa-arrow-right"></i> Mode</button>
-            <button onclick="sendIR('Timer')"><i class="fas fa-clock"></i> Timer</button>
-            <button onclick="sendIR('Speed')"><i class="fas fa-fan"></i> Speed</button>
-            <button onclick="sendIR('Swing')"><i class="fas fa-wind"></i> Swing</button>
+            
+            <div class="ac-buttons">
+                <button onclick="sendIR('Up')"><i class="fas fa-plus"></i> Temp</button>
+                <button onclick="sendIR('Down')"><i class="fas fa-minus"></i> Temp</button>
+                <button onclick="sendIR('Left')"><i class="fas fa-arrow-left"></i> Mode</button>
+                <button onclick="sendIR('Rightx')"><i class="fas fa-arrow-right"></i> Mode</button>
+                <button onclick="sendIR('Timer')"><i class="fas fa-clock"></i> Timer</button>
+                <button onclick="sendIR('Speed')"><i class="fas fa-fan"></i> Speed</button>
+                <button onclick="sendIR('Swing')"><i class="fas fa-wind"></i> Swing</button>
+            </div>
         </div>
         
         <div class="footer">
@@ -501,5 +534,4 @@
         document.getElementById('dispositivo').dispatchEvent(new Event('change'));
     </script>
 </body>
-
 </html>
