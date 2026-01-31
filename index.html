@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Universal Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c, #1e1e1e, #2c2c2c);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #00d4ff, #007bff, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        .selection {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        select {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #000;  /* Fondo negro */
+            color: #fff;  /* Letras blancas */
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.5);
+            transform: scale(1.02);
+        }
+        option {
+            background: #000;  /* Fondo negro para opciones */
+            color: #fff;  /* Letras blancas para opciones */
+        }
+        .power-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff4757, #ff3838, #ff6b6b);
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 30px auto;
+            display: block;
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .power-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        .power-btn:hover::before {
+            left: 100%;
+        }
+        .power-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(255, 71, 87, 0.8);
+        }
+        .tv-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .ac-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .ac-display {
+            border: 3px solid #00d4ff;
+            width: 180px;
+            height: 180px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            background: linear-gradient(145deg, rgba(0, 212, 255, 0.1), rgba(0, 123, 255, 0.1));
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+            position: relative;
+        }
+        .ac-display::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00d4ff, #007bff, #ff007f);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .ac-display:hover::after {
+            opacity: 0.5;
+        }
+        #temp {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        #mode {
+            font-size: 1.2em;
+            color: #ff007f;
+            margin-top: 5px;
+        }
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .nav-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+        .num-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #888;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.2em;
+            }
+            .tv-controls {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .selection {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-remote"></i> Control Universal Web</h1>
+        
+        <div class="selection">
+            <select id="marca">
+                <option value="Generic">Generic</option>
+                <option value="Samsung">Samsung</option>
+                <option value="LG">LG</option>
+                <option value="Sony">Sony</option>
+                <option value="Panasonic">Panasonic</option>
+                <option value="Daikin">Daikin</option>
+                <option value="Mitsubishi">Mitsubishi</option>
+            </select>
+            
+            <select id="dispositivo">
+                <option value="TV">TV</option>
+                <option value="AC">AC</option>
+            </select>
+        </div>
+        
+        <button class="power-btn" onclick="sendIR('Powerx')">
+            <i class="fas fa-power-off"></i>
+        </button>
+        
+        <!-- Controles TV -->
+        <div id="tv-controls" class="tv-controls hidden">
+            <button onclick="sendIR('Vol+')"><i class="fas fa-volume-up"></i></button>
+            <button onclick="sendIR('Vol-')"><i class="fas fa-volume-down"></i></button>
+            <button onclick="sendIR('Ch+')">CH+</button>
+            <button onclick="sendIR('Ch-')">CH-</button>
+            <button onclick="sendIR('Up')" class="nav-btn"><i class="fas fa-chevron-up"></i></button>
+            <button onclick="sendIR('Down')" class="nav-btn"><i class="fas fa-chevron-down"></i></button>
+            <button onclick="sendIR('Left')" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+            <button onclick="sendIR('Rightx')" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+            <button onclick="sendIR('OK')">OK</button>
+            <button onclick="sendIR('Home')"><i class="fas fa-home"></i></button>
+            <button onclick="sendIR('Back')"><i class="fas fa-arrow-left"></i></button>
+            <button onclick="sendIR('Options')"><i class="fas fa-cog"></i></button>
+            <button onclick="sendIR('0')" class="num-btn">0</button>
+            <button onclick="sendIR('1')" class="num-btn">1</button>
+            <button onclick="sendIR('2')" class="num-btn">2</button>
+            <button onclick="sendIR('3')" class="num-btn">3</button>
+            <button onclick="sendIR('4')" class="num-btn">4</button>
+            <button onclick="sendIR('5')" class="num-btn">5</button>
+            <button onclick="sendIR('6')" class="num-btn">6</button>
+            <button onclick="sendIR('7')" class="num-btn">7</button>
+            <button onclick="sendIR('8')" class="num-btn">8</button>
+            <button onclick="sendIR('9')" class="num-btn">9</button>
+        </div>
+        
+        <!-- Controles AC -->
+        <div id="ac-controls" class="ac-controls hidden">
+            <div class="ac-display">
+                <div id="temp">24°C</div>
+                <div id="mode">Cool</div>
+            </div>
+            <button onclick="sendIR('Up')"><i class="fas fa-plus"></i> Temp</button>
+            <button onclick="sendIR('Down')"><i class="fas fa-minus"></i> Temp</button>
+            <button onclick="sendIR('Left')"><i class="fas fa-arrow-left"></i> Mode</button>
+            <button onclick="sendIR('Rightx')"><i class="fas fa-arrow-right"></i> Mode</button>
+            <button onclick="sendIR('Timer')"><i class="fas fa-clock"></i> Timer</button>
+            <button onclick="sendIR('Speed')"><i class="fas fa-fan"></i> Speed</button>
+            <button onclick="sendIR('Swing')"><i class="fas fa-wind"></i> Swing</button>
+        </div>
+        
+        <div class="footer">
+            <p>Conectado vía Wi-Fi al ESP32</p>
+        </div>
+    </div>
+
+    <script>
+        // Mapa de patrones IR (vacío, copia y pega tu mapa aquí)
+        const devicePatterns = {
+            'Generic': {  // Marca genérica por defecto (códigos de ejemplo para probar)
+    'TV': {
+      'Powerx': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],  // Ejemplo Samsung TV Power
+      'Vol+': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],  // Volumen +
+      'Vol-': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],  // Volumen -
+      'Ch+': [4500, 4500, 560, 1690, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],  // Canal +
+      'Ch-': [4500, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 1690, 560, 560],  // Canal -
+      '0': [4500, 4500, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 1690],  // Número 0
+      '1': [4500, 4500, 560, 560, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],  // Número 1
+      '2': [4500, 4500, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],  // Número 2
+      '3': [4500, 4500, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560],  // Número 3
+      '4': [4500, 4500, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],  // Número 4
+      '5': [4500, 4500, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 1690, 560, 560],  // Número 5
+      '6': [4500, 4500, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],  // Número 6
+      '7': [4500, 4500, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 1690, 560, 560],  // Número 7
+      '8': [4500, 4500, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 560],  // Número 8
+      '9': [4500, 4500, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560],  // Número 9
+      'Up': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 560, 560, 1690],  // Flecha arriba
+      'Down': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],  // Flecha abajo
+      'Left': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],  // Flecha izquierda
+      'Rightx': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],  // Flecha derecha
+      'OK': [4500, 4500, 560, 1690, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],  // OK
+      'Home': [4500, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 1690, 560, 560],  // Home
+      'Options': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560],  // Opciones
+      'Back': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 1690],  // Atrás
+    },
+    'AC': {
+      'Up': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 560, 560, 1690],
+      'Down': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],
+      'Left': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],
+      'Rightx': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],  // Nota: En Python es 'Right', pero mantengo 'Rightx' para consistencia con tu mapa original
+      'OK': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],
+      'Options': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560],
+      'Home': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 1690, 560, 560],
+      'Back': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 1690],
+      '0': [9000, 4500, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 1690],
+      '1': [9000, 4500, 560, 560, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],
+      '2': [9000, 4500, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],
+      '3': [9000, 4500, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560],
+      '4': [9000, 4500, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],
+      '5': [9000, 4500, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 1690, 560, 560],
+      '6': [9000, 4500, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],
+      '7': [9000, 4500, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 1690, 560, 560],
+      '8': [9000, 4500, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 560],
+      '9': [9000, 4500, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560],
+      // 🔥 Agregados faltantes para AC (sincronizados con Python)
+      'Powerx': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],  // Nota: Cambié 'Power' a 'Powerx' para consistencia con tu mapa original
+      'Temp+': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],
+      'Temp-': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],
+      'Mode': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],
+      'Fan+': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 1690, 560, 560],
+      'Fan-': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560],
+      // 🔥 Nuevos patrones para Timer, Speed, Swing (placeholders; ajusta con tus señales reales)
+      'Timer': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],  // Ejemplo genérico
+      'Speed': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],  // Ejemplo genérico
+      'Swing': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],  // Ejemplo genérico
+    },
+  },
+  'Samsung': {
+    'TV': {
+      'Power': [4500, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],  // NEC protocol
+      'Vol+': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],
+      'Vol-': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],
+      'Ch+': [4500, 4500, 560, 1690, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],
+      'Ch-': [4500, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 1690, 560, 560],
+      'Mute': [4500, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 1690, 560, 560],
+    },
+    'AC': {
+      'Power': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560],  // Ejemplo para AC Samsung (puede variar)
+      'Temp+': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560],
+      'Temp-': [9000, 4500, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 1690, 560, 560],
+      'Mode': [9000, 4500, 560, 1690, 560, 560, 560, 1690, 560, 1690, 560, 560, 560, 560],
+    },
+  },
+  'LG': {
+    'TV': {
+      'Power': [8800, 4400, 560, 1680, 560, 560, 560, 1680, 560, 560, 560, 560, 560, 560],  // NEC-like
+      'Vol+': [8800, 4400, 560, 1680, 560, 560, 560, 560, 560, 1680, 560, 560, 560, 560],
+      'Vol-': [8800, 4400, 560, 1680, 560, 560, 560, 560, 560, 560, 560, 1680, 560, 560],
+      'Ch+': [8800, 4400, 560, 1680, 560, 560, 560, 1680, 560, 1680, 560, 560, 560, 560],
+      'Ch-': [8800, 4400, 560, 1680, 560, 560, 560, 1680, 560, 560, 560, 1680, 560, 560],
+      'Mute': [8800, 4400, 560, 1680, 560, 560, 560, 560, 560, 1680, 560, 1680, 560, 560],
+    },
+    'AC': {
+      'Power': [8800, 4400, 560, 1680, 560, 560, 560, 1680, 560, 560, 560, 560, 560, 560],  // Ejemplo LG AC
+      'Temp+': [8800, 4400, 560, 1680, 560, 560, 560, 560, 560, 1680, 560, 560, 560, 560],
+      'Temp-': [8800, 4400, 560, 1680, 560, 560, 560, 560, 560, 560, 560, 1680, 560, 560],
+      'Mode': [8800, 4400, 560, 1680, 560, 560, 560, 1680, 560, 1680, 560, 560, 560, 560],
+      'Fan+': [8800, 4400, 560, 1680, 560, 560, 560, 1680, 560, 560, 560, 1680, 560, 560],
+    },
+  },
+  'Sony': {
+    'TV': {
+      'Power': [2400, 600, 1200, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600],  // SIRC protocol (12 bits)
+      'Vol+': [2400, 600, 1200, 600, 600, 600, 600, 600, 600, 600, 600, 1200, 600, 600],
+            'Vol-': [2400, 600, 1200, 600, 600, 600, 600, 600, 600, 1200, 600, 600, 600, 600],
+      'Ch+': [2400, 600, 1200, 600, 600, 600, 600, 1200, 600, 600, 600, 600, 600, 600],
+      'Ch-': [2400, 600, 1200, 600, 600, 600, 1200, 600, 600, 600, 600, 600, 600, 600],
+      // Sony no tiene AC comunes en IRDB; omite o agrega si tienes
+    },
+  },
+  'Panasonic': {
+    'TV': {
+      'Power': [3500, 1750, 450, 450, 450, 1300, 450, 450, 450, 450, 450, 450, 450, 450],  // Panasonic protocol
+      'Vol+': [3500, 1750, 450, 450, 450, 450, 450, 1300, 450, 450, 450, 450, 450, 450],
+      'Vol-': [3500, 1750, 450, 450, 450, 450, 450, 450, 450, 1300, 450, 450, 450, 450],
+      'Ch+': [3500, 1750, 450, 450, 450, 1300, 450, 1300, 450, 450, 450, 450, 450, 450],
+      'Ch-': [3500, 1750, 450, 450, 450, 1300, 450, 450, 450, 1300, 450, 450, 450, 450],
+    },
+    'AC': {
+      'Power': [3500, 1750, 450, 450, 450, 1300, 450, 450, 450, 450, 450, 450, 450, 450],  // Ejemplo Panasonic AC
+      'Temp+': [3500, 1750, 450, 450, 450, 450, 450, 1300, 450, 450, 450, 450, 450, 450],
+      'Temp-': [3500, 1750, 450, 450, 450, 450, 450, 450, 450, 1300, 450, 450, 450, 450],
+    },
+  },
+  'Daikin': {  // Marca común para AC
+    'AC': {
+      'Power': [5000, 2500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500],  // Daikin protocol (ejemplo simplificado)
+      'Temp+': [5000, 2500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1000, 500, 500],
+      'Temp-': [5000, 2500, 500, 500, 500, 500, 500, 500, 500, 1000, 500, 500, 500, 500],
+      'Mode': [5000, 2500, 500, 500, 500, 500, 500, 1000, 500, 500, 500, 500, 500, 500],
+      'Fan+': [5000, 2500, 500, 500, 500, 1000, 500, 500, 500, 500, 500, 500, 500, 500],
+    },
+  },
+  'Mitsubishi': {  // Marca común para AC
+    'AC': {
+      'Power': [3100, 1600, 400, 1200, 400, 400, 400, 1200, 400, 400, 400, 400, 400, 400],  // Mitsubishi protocol
+      'Temp+': [3100, 1600, 400, 400, 400, 1200, 400, 400, 400, 400, 400, 400, 400, 400],
+      'Temp-': [3100, 1600, 400, 400, 400, 400, 400, 1200, 400, 400, 400, 400, 400, 400],
+      'Mode': [3100, 1600, 400, 1200, 400, 1200, 400, 400, 400, 400, 400, 400, 400, 400],
+    },
+  },
+        };
+
+        let currentTemp = 24;
+        let currentMode = "Cool";
+
+        function getPattern(marca, dispositivo, boton) {
+            if (devicePatterns[marca] && devicePatterns[marca][dispositivo] && devicePatterns[marca][dispositivo][boton]) {
+                return devicePatterns[marca][dispositivo][boton];
+            }
+            return null;
+        }
+
+        function sendIR(boton) {
+            const marca = document.getElementById('marca').value;
+            const dispositivo = document.getElementById('dispositivo').value;
+            const pattern = getPattern(marca, dispositivo, boton);
+            
+            if (!pattern) {
+                alert(`Botón "${boton}" no encontrado en el mapa para ${marca} ${dispositivo}`);
+                return;
+            }
+
+            // Actualizar estado AC localmente (como en Flutter)
+            if (dispositivo === 'AC') {
+                if (boton === 'Up' && currentTemp < 30) currentTemp++;
+                else if (boton === 'Down' && currentTemp > 16) currentTemp--;
+                else if (boton === 'Left') {
+                    const modes = ["Cool", "Heat", "Fan", "Dry"];
+                    const index = modes.indexOf(currentMode);
+                    currentMode = modes[(index - 1 + modes.length) % modes.length];
+                } else if (boton === 'Rightx') {
+                    const modes = ["Cool", "Heat", "Fan", "Dry"];
+                    const index = modes.indexOf(currentMode);
+                    currentMode = modes[(index + 1) % modes.length];
+                }
+                document.getElementById('temp').textContent = currentTemp + '°C';
+                document.getElementById('mode').textContent = currentMode;
+            }
+
+            const patternStr = pattern.join(',');
+            const data = {
+                marca: marca,
+                dispositivo: dispositivo,
+                boton: boton,
+                pattern: patternStr,
+                temp: dispositivo === 'AC' ? currentTemp : null,
+                mode: dispositivo === 'AC' ? currentMode : null
+            };
+
+            // Enviar POST al ESP32 (reemplaza con tu IP real)
+            fetch('http://[IP_DEL_ESP32]/sendir', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => console.log('Respuesta:', data))
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Cambiar UI según dispositivo
+        document.getElementById('dispositivo').addEventListener('change', function() {
+            const disp = this.value;
+            document.getElementById('tv-controls').classList.toggle('hidden', disp !== 'TV');
+            document.getElementById('ac-controls').classList.toggle('hidden', disp !== 'AC');
+        });
+
+        // Inicializar
+        document.getElementById('dispositivo').dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>
