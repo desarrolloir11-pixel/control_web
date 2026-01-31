@@ -480,7 +480,7 @@
             };
 
             // Enviar POST al ESP32 (reemplaza con tu IP real)
-            fetch('http://[IP_DEL_ESP32]/sendir', {
+            fetch('http://10.130.244.23/sendir', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -501,4 +501,5 @@
         document.getElementById('dispositivo').dispatchEvent(new Event('change'));
     </script>
 </body>
+
 </html>
